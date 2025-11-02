@@ -10,7 +10,9 @@ public class Main {
 
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         boolean isRunning = true;
-        VehicleFactory vehicleFactory;
+        VehicleFactory vehicleFactory = null;
+        String vehicleType = "";
+        int rentalTime = 0;
         while (isRunning) {
             System.out.println("Vehicle Rental System\n" +
                     "1. Rent a Car\n" +
@@ -24,32 +26,23 @@ public class Main {
                 case 1:
                     vehicleFactory = new CarFactory();
                     System.out.println("Enter Car Model: ");
-                    String model= input.next();
+                    vehicleType= input.next();
                     System.out.println("Enter Rental Days: ");
-                    int days=input.nextInt();
-                    Car car = (Car) vehicleFactory.createVehicle(model,days);
-                    vehicles.add(car);
-                    car.displayDetails();
+                    rentalTime =input.nextInt();
                     break;
                 case 2:
                     vehicleFactory = new BikeFactory();
                     System.out.println("Enter Bike Brand: ");
-                    String brand= input.next();
+                    vehicleType= input.next();
                     System.out.println("Enter Rental Hours: ");
-                    int hours=input.nextInt();
-                    Vehicle bike = vehicleFactory.createVehicle(brand,hours);
-                    vehicles.add(bike);
-                    bike.displayDetails();
+                    rentalTime=input.nextInt();
                     break;
                 case 3:
                     vehicleFactory = new TruckFactory();
                     System.out.println("Enter Truck Type: ");
-                    String type= input.next();
+                    vehicleType= input.next();
                     System.out.println("Enter Rental Weeks: ");
-                    int weeks=input.nextInt();
-                    Vehicle truck = vehicleFactory.createVehicle(type,weeks);
-                    vehicles.add(truck);
-                    truck.displayDetails();
+                    rentalTime=input.nextInt();
                     break;
                 case 4:
                     if (vehicles.isEmpty()) {
@@ -65,6 +58,12 @@ public class Main {
                     System.out.println("Thank you for using the Vehicle Rental System!");
                     isRunning = false;
                     break;
+            }
+            if (vehicleFactory!=null){
+                Vehicle vehicle=vehicleFactory.callFactory(vehicleType,rentalTime);
+                vehicles.add(vehicle);
+                vehicle.displayDetails();
+                vehicleFactory=null;
             }
         }
 
